@@ -1,17 +1,18 @@
+require('dotenv').config(); // Load environment variables from .env file
 const mongoose = require("mongoose");
-const db =
-  "mongodb+srv://logrocket:<password>@cluster1.dydb2rf.mongodb.net/?retryWrites=true&w=majority";
-/* Replace <password> with your database password */
 
-mongoose.set("strictQuery", true, "useNewUrlParser", true);
+const dbURI = process.env.DB_URI;
+
+mongoose.set("strictQuery", true);
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(db);
+    await mongoose.connect(dbURI);
     console.log("MongoDB is Connected...");
   } catch (err) {
-    console.error(err.message);
+    console.error("Error connecting to MongoDB:", err);
     process.exit(1);
   }
 };
+
 module.exports = connectDB;
